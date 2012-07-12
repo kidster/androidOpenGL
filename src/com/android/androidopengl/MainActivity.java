@@ -1,7 +1,5 @@
 package com.android.androidopengl;
 
-import org.w3c.dom.Text;
-
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.app.Activity;
@@ -9,14 +7,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.DialerFilter;
 import android.widget.TextView;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.support.v4.app.NavUtils;
 import android.widget.*;
-import android.speech.*;
 
 public class MainActivity extends Activity implements OnInitListener {
 	
@@ -39,16 +33,20 @@ public class MainActivity extends Activity implements OnInitListener {
 		AlertDialog helloAlert = new AlertDialog.Builder(this).create();
 		helloAlert.setTitle("This is a Demo");
 		helloAlert.setMessage("Hello, Once Again!");
+		
+		final GLSurfaceView drawSurface = new GLSurfaceView(this);
+		drawSurface.setRenderer(new HelloRenderer());
 		helloAlert.setButton(AlertDialog.BUTTON_POSITIVE,"Close", new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
 
+			public void onClick(DialogInterface dialog, int which) {
+				
+				setContentView(drawSurface);
 			}
 		});
 		helloAlert.setButton(AlertDialog.BUTTON_NEUTRAL,"Button2", new DialogInterface.OnClickListener() {
 
-			@Override
+
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 
@@ -56,7 +54,7 @@ public class MainActivity extends Activity implements OnInitListener {
 		});
 		helloAlert.setButton(AlertDialog.BUTTON_NEGATIVE,"Button3", new DialogInterface.OnClickListener() {
 
-			@Override
+
 			public void onClick(DialogInterface dialog, int which) {
 				// TODO Auto-generated method stub
 
@@ -66,9 +64,9 @@ public class MainActivity extends Activity implements OnInitListener {
 		
 		tts = new TextToSpeech(this, this);
 		
-		GLSurfaceView drawSurface = new GLSurfaceView(this);
-		drawSurface.setRenderer(new HelloRenderer());
-		setContentView(drawSurface);
+		GLSurfaceView drGlSurfaceView = new GLSurfaceView(this);
+		drGlSurfaceView.setRenderer(new GLRendererEx());
+		setContentView(drGlSurfaceView);
 
 	}
 
@@ -78,7 +76,7 @@ public class MainActivity extends Activity implements OnInitListener {
 		return true;
 	}
 
-	@Override
+
 	public void onInit(int status) {
 		tts.speak("No Ma Mess Wei", TextToSpeech.QUEUE_FLUSH, null);
 		
